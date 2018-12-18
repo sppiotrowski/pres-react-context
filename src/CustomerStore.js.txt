@@ -1,0 +1,31 @@
+import React from 'react'
+
+const CustomerContext = React.createContext({
+  customer: {},      // ~> Redux initState
+  fetch: (id) => {}  // ~> Redux Action
+})
+
+class CustomerStore extends React.Component {
+  constructor(props) {
+    super(props)
+    // ~ Redux reducer
+    const fetch = (id) => {
+      this.setState({ customer: async.fetch() })
+    }
+    // ~ Redux store
+    this.state = {
+      customer: {},
+      fetch
+    }
+  }
+  render() {
+    return (
+      <CustomerContext.Provider value={this.state}>
+        {this.props.children}
+      </CustomerContext.Provider>
+    )
+  }
+}
+
+export CustomerContext
+export default CustomerStore

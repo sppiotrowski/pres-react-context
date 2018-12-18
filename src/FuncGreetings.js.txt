@@ -1,0 +1,17 @@
+import React from 'react'
+import { CustomerContext } from './CustomerStore'
+
+const Greeting = () => {
+  return (
+    <CustomerContext.Consumer>
+      {({ customer, fetch }) => (
+        <div>
+          <p>Hello {customer.firstName}</p>
+          <button onClick={fetch}>Load</button>
+        </div>
+      )}
+    </CustomerContext.Consumer>
+  )
+}
+
+export default React.memo(Greeting)

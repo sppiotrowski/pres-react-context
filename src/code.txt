@@ -1,0 +1,71 @@
+import React from 'react'
+
+export const CustomerContext = React.createContext({
+  customer: {},
+  fetch: id => ({}),
+})
+
+export default class CustomerStore extends React.Component {
+  constructor(props) {
+    super(props)
+
+    // looks like redux reducer...
+    const fetch = id => {
+      this.setState({ customer: mock.fetch() })
+    }
+
+    // looks like redux store...
+    this.state = {
+      customer: {},
+      fetch,
+    }
+  }
+
+  render() {
+    return (
+      <CustomerContext.Provider value={this.state}>
+        {this.props.children}
+      </CustomerContext.Provider>
+    )
+  }
+}
+
+import { CustomerContext } from './CustomerStore'
+
+class Greetings extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    const { data, fetch } = this.context
+    return (
+      <div>
+        <h3>{this.props.greeting}</h3>
+        <p>{`${data.firstName} ${data.lastName}`}</p>
+        <button onClick={fetch}>Fetch Data</button>
+      </div>
+    )
+  }
+}
+Greetings.contextType = CustomerContext
+
+import { CustomerContext } from './CustomerStore'
+
+const Greeting = ({ greeting = 'Hello' }) => {
+  return (
+    <CustomerContext.Consumer>
+      {({ customer, fetch }) => {
+        return (
+          <div>
+            <h3>{greeting}</h3>
+            <p>{`${firstName} ${lastName}`}</p>
+            <button onClick={fetch}>Fetch Data</button>
+          </div>
+        )
+      }}
+    </CustomerContext.Consumer>
+  )
+}
+
+export default React.memo(Greeting)

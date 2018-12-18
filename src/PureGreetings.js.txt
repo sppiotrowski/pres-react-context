@@ -1,0 +1,23 @@
+import React from 'react'
+import { CustomerContext } from './CustomerStore'
+
+class Greetings extends React.PureComponent {
+
+  static contextType = CustomerContext
+
+  render() {
+    const {
+      customer,  // ~ mapStateToProps
+      fetch      // ~ mapDispatchToProps
+    } = this.context
+
+    return (
+      <div>
+        <p>Hello {customer.lastName}</p>
+        <button onClick={fetch}>Load</button>
+      </div>
+    )
+  }
+}
+
+export default Greetings
